@@ -8,14 +8,20 @@ analytical_matrix = [];
 for a = [-10, 1]
   for tau_maker = 1:12
     tau = 2.0**(-(tau_maker-1));
-    y_exp(1:2) = explicitEulerMethod(function_to_analyse, a, interval, tau, y_of_0);
-    y_rk4(1:2) = rungeKuttaMethod(function_to_analyse, a, interval, tau, y_of_0);
-    numerische_konvergenz_exp = norm(y_exp(1) - sin(interval(2)))/norm(y_exp(1) - sin(interval(2)));
-    numerische_konvergenz_rk4 = norm(y_rk4(1) - sin(interval(2)))/norm(y_rk4(1) - sin(interval(2)));
-    analytical_matrix(tau_maker,1:7) = [tau, y_exp(1), y_exp(2), numerische_konvergenz_exp, y_rk4(1), y_rk4(2), numerische_konvergenz_rk4];
+    y_exp = explicitEulerMethod(function_to_analyse, a, interval, tau, y_of_0);
+    y_rk4 = rungeKuttaMethod(function_to_analyse, a, interval, tau, y_of_0);
+    if tau_maker == 1
+      analytical_matrix(tau_maker,1:5) = [tau, y_exp, 0 , y_rk4, 0];
+    else
+      numerische_konvergenz_exp = norm(y_exp - sin(interval(2)))/norm(last_y_exp - sin(interval(2)));
+      numerische_konvergenz_rk4 = norm(y_rk4 - sin(interval(2)))/norm(last_y_rk4 - sin(interval(2)));
+      analytical_matrix(tau_maker,1:5) = [tau, y_exp, numerische_konvergenz_exp, y_rk4, numerische_konvergenz_rk4];
+    endif
+      last_y_exp = y_exp;
+      last_y_rk4 = y_rk4;
   endfor
-endfor
 disp(analytical_matrix)
+endfor
 
 ########################################################################
 ### task d)
