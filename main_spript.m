@@ -12,9 +12,7 @@ for a = [-10, 1]
     y_rk4(1:2) = rungeKuttaMethod(function_to_analyse, a, interval, tau, y_of_0);
     numerische_konvergenz_exp = norm(y_exp(1) - sin(interval(2)))/norm(y_exp(1) - sin(interval(2)));
     numerische_konvergenz_rk4 = norm(y_rk4(1) - sin(interval(2)))/norm(y_rk4(1) - sin(interval(2)));
-    disp(y_exp(1))
-    disp(y_exp(2))
-    analytical_matrix(tau_maker) = [tau, y_exp(1), y_exp(2), numerische_konvergenz_exp, y_rk4(1), y_rk4(2), numerische_konvergenz_rk4];
+    analytical_matrix(tau_maker,1:7) = [tau, y_exp(1), y_exp(2), numerische_konvergenz_exp, y_rk4(1), y_rk4(2), numerische_konvergenz_rk4];
   endfor
 endfor
 disp(analytical_matrix)
